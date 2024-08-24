@@ -46,18 +46,30 @@ public class GmailAPI {
                 .build();
     }
 
-    public static Optional<String> getMessage() throws GeneralSecurityException, IOException {
-        final HttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Gmail service = getGmailService(HTTP_TRANSPORT);
-        ListMessagesResponse response = service.users().messages().list("me").setMaxResults(1L).execute();
+    public static Optional<String> getMessage() {
+        Gmail service = null;
+        ListMessagesResponse response = null;
+        try {
+            final HttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+            service = getGmailService(HTTP_TRANSPORT);
+            response = service.users().messages().list("me").setMaxResults(1L).execute();
+        } catch (GeneralSecurityException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+
         List<Message> messages = response.getMessages();
-        Message message;
+        Message message = null;
         if (messages.isEmpty()) {
             System.out.println("No messages found.");
             return Optional.empty();
         } else {
             String messageId = messages.getFirst().getId();
-            message = service.users().messages().get("me", messageId).execute();
+            try {
+                message = service.users().messages().get("me", messageId).execute();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+
             System.out.println("Message snippet: " + message.getSnippet());
         }
         return Optional.of(message.getSnippet());
