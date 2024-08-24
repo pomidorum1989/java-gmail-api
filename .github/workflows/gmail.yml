@@ -10,7 +10,8 @@ jobs:
 
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
+      pages: write
 
     steps:
       - name: Checkout Repository
@@ -39,6 +40,20 @@ jobs:
           name: gradle-report
           path: build/reports/tests/test/*
           retention-days: 30
+
+      - name: Copy test reports to docs
+        run: |
+          mkdir -p docs
+          cp -r build/reports/tests/test/* docs/
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          path: build/reports/tests/test/
+          retention-days: 30
+
+      - name: Deploy GitHub Pages site
+        uses: actions/deploy-pages@v4.0.5
 
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v4.0.0
