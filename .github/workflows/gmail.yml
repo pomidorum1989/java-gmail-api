@@ -1,4 +1,4 @@
-name: GMail email reader
+name: GMail API email reader
 
 on:
 #   push:
