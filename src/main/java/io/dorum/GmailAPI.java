@@ -33,9 +33,9 @@ public class GmailAPI {
             jsonMap.put("client_secret", getPasswordFromKeychain("gmail-client-secret"));
             jsonMap.put("refresh_token", getPasswordFromKeychain("gmail-refresh-token"));
         } else {
-            jsonMap.put("client_id", System.getenv("gmail-client-id"));
-            jsonMap.put("client_secret", System.getenv("gmail-client-secret"));
-            jsonMap.put("refresh_token", System.getenv("gmail-refresh-token"));
+            jsonMap.put("client_id", System.getenv("GMAIL_CLIENT_ID"));
+            jsonMap.put("client_secret", System.getenv("GMAIL_CLIENT_SECRET"));
+            jsonMap.put("refresh_token", System.getenv("GMAIL_REFRESH_SECRET"));
         }
         String jsonString = gson.toJson(jsonMap);
         GoogleCredentials credentials = GoogleCredentials.

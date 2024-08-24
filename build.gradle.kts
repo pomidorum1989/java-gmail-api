@@ -24,4 +24,12 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+
+    testLogging {
+        showStandardStreams = true
+    }
+
+    filter {
+        includeTestsMatching("io.dorum.tests.GmailTest.*")
+    }
 }
