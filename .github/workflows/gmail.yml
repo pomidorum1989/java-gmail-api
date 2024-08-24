@@ -30,6 +30,7 @@ jobs:
 
       - name: Attach report
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: gradle-report
           path: build/reports/tests/test/*
@@ -38,6 +39,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: test
+    if: always()
     environment:
       name: github-pages
     steps:
