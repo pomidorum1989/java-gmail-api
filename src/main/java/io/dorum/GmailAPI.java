@@ -37,7 +37,6 @@ public class GmailAPI {
             jsonMap.put("client_secret", getSystemEnv("GMAIL_CLIENT_SECRET"));
             jsonMap.put("refresh_token", getSystemEnv("GMAIL_REFRESH_SECRET"));
         }
-        System.out.println(jsonMap);
         String jsonString = gson.toJson(jsonMap);
         GoogleCredentials credentials = GoogleCredentials.
                 fromStream(new ByteArrayInputStream(jsonString.getBytes(StandardCharsets.UTF_8)))
