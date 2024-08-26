@@ -28,15 +28,10 @@ jobs:
           GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
         run: ./gradlew test
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5.0.0
-
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3.0.1
-        with:
-          name: report
-          path: build/reports/tests/test/
-          retention-days: 30
+      - name: Copy test reports to docs
+        run: |
+          mkdir -p docs
+          cp -r build/reports/tests/test/* docs/
 
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v4.0.0
@@ -48,13 +43,16 @@ jobs:
     environment:
       name: github-pages
     steps:
-      - name: Copy test reports to docs
-        run: |
-          mkdir -p docs
-          cp -r build/reports/tests/test/* docs/
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5.0.0
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          name: report
+          path: build/reports/tests/test/
+          retention-days: 30
 
       - name: Deploy GitHub Pages site
         uses: actions/deploy-pages@v4.0.5
