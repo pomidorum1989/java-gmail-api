@@ -79,7 +79,7 @@ public class GmailAPI {
 
     public static String getSystemEnv(String variable) {
         try {
-            return System.getProperty(variable);
+            return System.getenv(variable);
         } catch (NullPointerException | SecurityException e) {
             System.out.println(e.getMessage());
         }

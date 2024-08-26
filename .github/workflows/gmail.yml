@@ -11,6 +11,10 @@ permissions:
 
 jobs:
   test:
+    env:
+      GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
+      GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
+      GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -27,10 +31,6 @@ jobs:
 
       - name: Run tests with Gradle Wrapper
         run: ./gradlew test
-        env:
-          GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
-          GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
-          GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
 
 #      - name: Copy test reports to docs
 #        if: always()
