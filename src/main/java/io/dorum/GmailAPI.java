@@ -33,9 +33,9 @@ public class GmailAPI {
             jsonMap.put("client_secret", getPasswordFromKeychain("gmail-client-secret"));
             jsonMap.put("refresh_token", getPasswordFromKeychain("gmail-refresh-token"));
         } else {
-            jsonMap.put("client_id", System.getenv("GMAIL_CLIENT_ID"));
-            jsonMap.put("client_secret", System.getenv("GMAIL_CLIENT_SECRET"));
-            jsonMap.put("refresh_token", System.getenv("GMAIL_REFRESH_SECRET"));
+            jsonMap.put("client_id", getSystemEnv("GMAIL_CLIENT_ID"));
+            jsonMap.put("client_secret", getSystemEnv("GMAIL_CLIENT_SECRET"));
+            jsonMap.put("refresh_token", getSystemEnv("GMAIL_REFRESH_SECRET"));
         }
         String jsonString = gson.toJson(jsonMap);
         GoogleCredentials credentials = GoogleCredentials.
@@ -57,6 +57,7 @@ public class GmailAPI {
             System.out.println(e.getMessage());
         }
 
+        assert response != null;
         List<Message> messages = response.getMessages();
         Message message = null;
         if (messages.isEmpty()) {
@@ -70,9 +71,19 @@ public class GmailAPI {
                 System.out.println(e.getMessage());
             }
 
+            assert message != null;
             System.out.println("Message snippet: " + message.getSnippet());
         }
         return Optional.of(message.getSnippet());
+    }
+
+    public static String getSystemEnv(String variable) {
+        try {
+            return System.getenv(variable);
+        } catch (NullPointerException | SecurityException e) {
+            System.out.println(e.getMessage());
+        }
+        return "";
     }
 }
 
