@@ -26,17 +26,17 @@ jobs:
         uses: gradle/actions/setup-gradle@v4.0.0
 
       - name: Run tests with Gradle Wrapper
+        run: ./gradlew test
         env:
           GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
           GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
           GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
-        run: ./gradlew test
 
-      - name: Copy test reports to docs
-        if: always()
-        run: |
-          mkdir -p docs
-          cp -r build/reports/tests/test/* docs/
+#      - name: Copy test reports to docs
+#        if: always()
+#        run: |
+#          mkdir -p docs
+#          cp -r build/reports/tests/test/* docs/
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3.0.1

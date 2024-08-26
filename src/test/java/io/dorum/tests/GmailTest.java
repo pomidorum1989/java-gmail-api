@@ -9,7 +9,7 @@ public class GmailTest {
 
     @Test
     @DisplayName("Gmail test")
-    public void gmailTest() {
+    public void gmailTest() {;
         Assumptions.assumeTrue(!GmailAPI.getMessage().orElse("Message not found").isEmpty());
     }
 }
