@@ -10,7 +10,6 @@ public class GmailTest {
     @Test
     @DisplayName("Gmail test")
     public void gmailTest() {;
-        System.out.println(GmailAPI.getSystemEnv("GMAIL_CLIENT_ID"));
         Assertions.assertFalse(GmailAPI.getMessage().orElse("Message not found").isEmpty());
     }
 }
